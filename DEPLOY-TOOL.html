@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastMine — Экспорт для Vercel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    
+    .header p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+    
+    .content {
+      padding: 30px;
+    }
+    
+    .alert {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .alert strong {
+      color: #856404;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    
+    .alert ol {
+      color: #856404;
+      margin-left: 20px;
+      line-height: 1.8;
+    }
+    
+    button {
+      width: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    button span {
+      position: relative;
+      z-index: 1;
+    }
+    
+    #progress {
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 40px;
+      background: #e9ecef;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      transition: width 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    
+    .log {
+      max-height: 250px;
+      overflow-y: auto;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.8;
+      border: 1px solid #dee2e6;
+    }
+    
+    .log::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .log::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .log::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+    
+    .log-item {
+      padding: 8px 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+    
+    .log-item:last-child {
+      border-bottom: none;
+    }
+    
+    .success { color: #28a745; font-weight: 600; }
+    .error { color: #dc3545; font-weight: 600; }
+    .info { color: #17a2b8; }
+    
+    .footer {
+      background: #f8f9fa;
+      padding: 25px 30px;
+      border-top: 1px solid #dee2e6;
+    }
+    
+    .footer h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+    
+    .footer ul {
+      list-style: none;
+    }
+    
+    .footer li {
+      padding: 8px 0;
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    .footer code {
+      background: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      color: #e83e8c;
+      border: 1px solid #dee2e6;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .loading {
+      animation: pulse 1.5s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🚀 FastMine Deploy Tool</h1>
+      <p>Инструмент для экспорта изображений на Vercel</p>
+    </div>
+    
+    <div class="content">
+      <div class="alert">
+        <strong>📋 Инструкция:</strong>
+        <ol>
+          <li>Нажмите кнопку ниже для скачивания 29 изображений</li>
+          <li>Экспортируйте проект из Figma Make (Export → Download ZIP)</li>
+          <li>Создайте папку <code>/public/assets/</code> в проекте</li>
+          <li>Переместите все скачанные изображения туда</li>
+          <li>Следуйте инструкциям в <code>STATUS.md</code></li>
+        </ol>
+      </div>
+      
+      <button id="downloadBtn" onclick="startDownload()">
+        <span>📥 Скачать все 29 изображений</span>
+      </button>
+      
+      <div id="progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill">0%</div>
+        </div>
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <h3>📖 После скачивания:</h3>
+      <ul>
+        <li>✅ Замените <code>App.tsx</code> на <code>App.production.tsx</code></li>
+        <li>✅ Замените <code>FormatsImproved.tsx</code> на <code>FormatsImproved.production.tsx</code></li>
+        <li>✅ Запустите <code>npm run build</code></li>
+        <li>✅ Деплойте на Vercel командой <code>vercel</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const images = [
+      { hash: '885a8b424b7e32f07ae81d536d3a3ae6dadfd41e', name: 'hero.png' },
+      { hash: '56f69e0474ec772a88300550b89978aa4bb66d07', name: 'logo.png' },
+      { hash: 'd4caffbd1b4b3651bd144189526de9176d7efdb0', name: 'gpu.png' },
+      { hash: 'e57e6fb1dfd62d69f2598b7c2c289b037f6c1510', name: 'asic.png' },
+      { hash: 'f9e5f2984be1785c02e05f099e954cdcc8d8e19d', name: 'delivery.png' },
+      { hash: '490d0961df8654ee8501ce2c71de943e932c4fe2', name: 'commissioning.png' },
+      { hash: '21a5a8c2b90da22060a42c7bef0400bf6255aacc', name: 'grid.png' },
+      { hash: '4ad3a5dfe0e2113899411165f23c16ef7d0e907e', name: 'fastmine.png' },
+      { hash: '37044ee41cb727ee13ebe340815122f6d6723242', name: 'container-modules.png' },
+      { hash: '86ef02a6c76ec34a173cea4ea076e15ca28ae6d8', name: 'personnel.png' },
+      { hash: '24dce7e9c079a57847a079bb893c6188aa0e9b0d', name: 'aerial-view.png' },
+      { hash: 'a7fc722c86776a0bf8ae6671c93a8255f91a3403', name: 'maintenance.png' },
+      { hash: '1385c16d2bcf14b947e7042001aa780956ef5594', name: 'new-stations.png' },
+      { hash: 'd2686ebd5865b7221b71314ed9c738d895a37c89', name: 'monitoring.png' },
+      { hash: '66e41c056110298cad484bbcd0c9c3736aafb1e4', name: 'full-cycle.png' },
+      { hash: '0a03d438a8f24d6c3108f40deccee556b78510db', name: 'guarantees.png' },
+      { hash: '719b1dfca7d55986a1af27c1e11fe78075a7f274', name: 'asic-hosting.png' },
+      { hash: 'dae7537bbe41af0f943f02540afbf6880f80d258', name: 'gpu-mining.png' },
+      { hash: 'e4c272631a44bc06a650ed8fb8abe5e645da862e', name: 'weichai.png' },
+      { hash: 'a38ccc8bbd9c936a8ac7f20348187b36d94af794', name: 'gas-infra.png' },
+      { hash: 'd30fa8deae183fccea0bae53a15f33a7af23d5a3', name: 'technician.png' },
+      { hash: '431ef10b0ea129e06e8de622d6cff46855940cff', name: 'baudouin.png' },
+      { hash: '3c9bb3fce1e3fcafcad20a84be7d57779fa0b41d', name: 'baudouin-complex.png' },
+      { hash: '9e1e0e6a5be658c95ceffa6a3db3e52927641cc9', name: 'gas-pipeline.png' },
+      { hash: '4560e859a8f981ee8aa2aeafae2836371b6da85e', name: 'service-maintenance.png' },
+      { hash: 'fdfe24102a1f198363c86a9211c03f20ca4860c4', name: 'financial-model.png' },
+      { hash: '5494590d6b5fc44e953a5f245784f87beff560c0', name: 'supermaly-generator.png' },
+      { hash: '99da96406a82b8363ffd914c123b36fe267d7b03', name: 'gas-pipeline-field.png' },
+      { hash: 'd769db4c393b1e2e2b14d91f6505d05b1b00b78f', name: 'engi-blue-generator.png' }
+    ];
+
+    function addLog(message, type = 'info') {
+      const log = document.getElementById('log');
+      const item = document.createElement('div');
+      item.className = `log-item ${type}`;
+      item.textContent = message;
+      log.appendChild(item);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    async function startDownload() {
+      const btn = document.getElementById('downloadBtn');
+      const progress = document.getElementById('progress');
+      const progressFill = document.getElementById('progressFill');
+      const log = document.getElementById('log');
+      
+      btn.disabled = true;
+      btn.classList.add('loading');
+      progress.style.display = 'block';
+      log.innerHTML = '';
+      
+      addLog('🚀 Начинаю скачивание 29 изображений FastMine...', 'info');
+      
+      let successCount = 0;
+      let errorCount = 0;
+      
+      for (let i = 0; i < images.length; i++) {
+        const { hash, name } = images[i];
+        const percent = Math.round(((i + 1) / images.length) * 100);
+        
+        progressFill.style.width = percent + '%';
+        progressFill.textContent = percent + '%';
+        
+        try {
+          const module = await import(`figma:asset/${hash}.png`);
+          const imageUrl = module.default;
+          
+          const a = document.createElement('a');
+          a.href = imageUrl;
+          a.download = name;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          
+          successCount++;
+          addLog(`✅ ${i + 1}/29: ${name}`, 'success');
+          
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+        } catch (error) {
+          errorCount++;
+          addLog(`❌ ${i + 1}/29: ${name} - ОШИБКА`, 'error');
+          console.error(`Ошибка при скачивании ${name}:`, error);
+        }
+      }
+      
+      if (errorCount === 0) {
+        addLog(`\n🎉 УСПЕХ! Все ${successCount} изображений скачаны!`, 'success');
+        addLog('📁 Проверьте папку загрузок вашего браузера', 'info');
+        addLog('📖 Следующий шаг: см. STATUS.md для деплоя', 'info');
+      } else {
+        addLog(`\n⚠️ Скачано: ${successCount}, Ошибок: ${errorCount}`, 'error');
+        addLog('🔄 Попробуйте скачать снова', 'info');
+      }
+      
+      btn.disabled = false;
+      btn.classList.remove('loading');
+      btn.querySelector('span').textContent = '🔄 Скачать снова';
+    }
+  </script>
+</body>
+</html>

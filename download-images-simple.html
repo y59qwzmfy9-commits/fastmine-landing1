@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Скачать изображения FastMine</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #3342f3;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin: 10px 0;
+    }
+    button:hover { background: #2532d0; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    #log {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f8f8;
+      border-radius: 5px;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 12px;
+      display: none;
+    }
+    .success { color: #28a745; }
+    .error { color: #dc3545; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🚀 FastMine Image Downloader</h1>
+    <p>Скачайте все 29 изображений для деплоя на Vercel</p>
+    
+    <button onclick="download()">📥 Скачать все 29 изображений</button>
+    
+    <div id="log"></div>
+  </div>
+
+  <script>
+    const imgs = [
+      ['885a8b424b7e32f07ae81d536d3a3ae6dadfd41e', 'hero.png'],
+      ['56f69e0474ec772a88300550b89978aa4bb66d07', 'logo.png'],
+      ['d4caffbd1b4b3651bd144189526de9176d7efdb0', 'gpu.png'],
+      ['e57e6fb1dfd62d69f2598b7c2c289b037f6c1510', 'asic.png'],
+      ['f9e5f2984be1785c02e05f099e954cdcc8d8e19d', 'delivery.png'],
+      ['490d0961df8654ee8501ce2c71de943e932c4fe2', 'commissioning.png'],
+      ['21a5a8c2b90da22060a42c7bef0400bf6255aacc', 'grid.png'],
+      ['4ad3a5dfe0e2113899411165f23c16ef7d0e907e', 'fastmine.png'],
+      ['37044ee41cb727ee13ebe340815122f6d6723242', 'container-modules.png'],
+      ['86ef02a6c76ec34a173cea4ea076e15ca28ae6d8', 'personnel.png'],
+      ['24dce7e9c079a57847a079bb893c6188aa0e9b0d', 'aerial-view.png'],
+      ['a7fc722c86776a0bf8ae6671c93a8255f91a3403', 'maintenance.png'],
+      ['1385c16d2bcf14b947e7042001aa780956ef5594', 'new-stations.png'],
+      ['d2686ebd5865b7221b71314ed9c738d895a37c89', 'monitoring.png'],
+      ['66e41c056110298cad484bbcd0c9c3736aafb1e4', 'full-cycle.png'],
+      ['0a03d438a8f24d6c3108f40deccee556b78510db', 'guarantees.png'],
+      ['719b1dfca7d55986a1af27c1e11fe78075a7f274', 'asic-hosting.png'],
+      ['dae7537bbe41af0f943f02540afbf6880f80d258', 'gpu-mining.png'],
+      ['e4c272631a44bc06a650ed8fb8abe5e645da862e', 'weichai.png'],
+      ['a38ccc8bbd9c936a8ac7f20348187b36d94af794', 'gas-infra.png'],
+      ['d30fa8deae183fccea0bae53a15f33a7af23d5a3', 'technician.png'],
+      ['431ef10b0ea129e06e8de622d6cff46855940cff', 'baudouin.png'],
+      ['3c9bb3fce1e3fcafcad20a84be7d57779fa0b41d', 'baudouin-complex.png'],
+      ['9e1e0e6a5be658c95ceffa6a3db3e52927641cc9', 'gas-pipeline.png'],
+      ['4560e859a8f981ee8aa2aeafae2836371b6da85e', 'service-maintenance.png'],
+      ['fdfe24102a1f198363c86a9211c03f20ca4860c4', 'financial-model.png'],
+      ['5494590d6b5fc44e953a5f245784f87beff560c0', 'supermaly-generator.png'],
+      ['99da96406a82b8363ffd914c123b36fe267d7b03', 'gas-pipeline-field.png'],
+      ['d769db4c393b1e2e2b14d91f6505d05b1b00b78f', 'engi-blue-generator.png']
+    ];
+
+    function log(msg, cls = '') {
+      const el = document.getElementById('log');
+      el.style.display = 'block';
+      el.innerHTML += `<div class="${cls}">${msg}</div>`;
+      el.scrollTop = el.scrollHeight;
+    }
+
+    async function download() {
+      const btn = event.target;
+      btn.disabled = true;
+      document.getElementById('log').innerHTML = '';
+      
+      log('🚀 Начинаю скачивание 29 изображений...');
+      
+      for (let i = 0; i < imgs.length; i++) {
+        const [hash, name] = imgs[i];
+        try {
+          const mod = await import(`figma:asset/${hash}.png`);
+          const a = document.createElement('a');
+          a.href = mod.default;
+          a.download = name;
+          a.click();
+          log(`✅ ${i + 1}/29: ${name}`, 'success');
+          await new Promise(r => setTimeout(r, 400));
+        } catch (e) {
+          log(`❌ ${i + 1}/29: ${name} - ОШИБКА`, 'error');
+        }
+      }
+      
+      log('🎉 Готово! Проверьте папку загрузок.', 'success');
+      btn.disabled = false;
+    }
+  </script>
+</body>
+</html>
