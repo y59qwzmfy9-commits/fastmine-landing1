@@ -2,20 +2,20 @@ import React, { useMemo, useState } from "react";
 import { Cpu, Zap, Truck, Settings, Server, TrendingUp, Building2, Flame, Sparkles, Shield, Award, Phone, Mail, MapPin, Send } from "lucide-react";
 import { FormatsImproved } from "./components/FormatsImproved";
 
-import heroImage from "figma:asset/885a8b424b7e32f07ae81d536d3a3ae6dadfd41e.png";
-import logoImage from "figma:asset/56f69e0474ec772a88300550b89978aa4bb66d07.png";
-import gpuImage from "figma:asset/d4caffbd1b4b3651bd144189526de9176d7efdb0.png";
-import asicImage from "figma:asset/e57e6fb1dfd62d69f2598b7c2c289b037f6c1510.png";
-import deliveryImage from "figma:asset/f9e5f2984be1785c02e05f099e954cdcc8d8e19d.png";
-import commissioningImage from "figma:asset/490d0961df8654ee8501ce2c71de943e932c4fe2.png";
-import gridImage from "figma:asset/21a5a8c2b90da22060a42c7bef0400bf6255aacc.png";
-import fastmineImage from "figma:asset/4ad3a5dfe0e2113899411165f23c16ef7d0e907e.png";
-import containerModulesImage from "figma:asset/37044ee41cb727ee13ebe340815122f6d6723242.png";
-import personnelImage from "figma:asset/86ef02a6c76ec34a173cea4ea076e15ca28ae6d8.png";
-import aerialViewImage from "figma:asset/24dce7e9c079a57847a079bb893c6188aa0e9b0d.png";
-import maintenanceImage from "figma:asset/a7fc722c86776a0bf8ae6671c93a8255f91a3403.png";
-import newStationsImage from "figma:asset/1385c16d2bcf14b947e7042001aa780956ef5594.png";
-import monitoringImage from "figma:asset/d2686ebd5865b7221b71314ed9c738d895a37c89.png";
+const heroImage = "/assets/hero.png";
+const logoImage = "/assets/logo.png";
+const gpuImage = "/assets/gpu.png";
+const asicImage = "/assets/asic.png";
+const deliveryImage = "/assets/delivery.png";
+const commissioningImage = "/assets/commissioning.png";
+const gridImage = "/assets/grid.png";
+const fastmineImage = "/assets/fastmine.png";
+const containerModulesImage = "/assets/container-modules.png";
+const personnelImage = "/assets/personnel.png";
+const aerialViewImage = "/assets/aerial-view.png";
+const maintenanceImage = "/assets/maintenance.png";
+const newStationsImage = "/assets/new-stations.png";
+const monitoringImage = "/assets/monitoring.png";
 
 /** FASTMINE GPU sub-landing (Figma Make / React) */
 

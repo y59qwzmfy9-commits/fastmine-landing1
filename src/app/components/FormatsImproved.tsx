@@ -1,20 +1,20 @@
 import React from "react";
 import { Server, Flame, Sparkles, TrendingUp, Building2 } from "lucide-react";
-import fullCycleImage from "figma:asset/66e41c056110298cad484bbcd0c9c3736aafb1e4.png";
-import guaranteesImage from "figma:asset/0a03d438a8f24d6c3108f40deccee556b78510db.png";
-import asicHostingImage from "figma:asset/719b1dfca7d55986a1af27c1e11fe78075a7f274.png";
-import gpuMiningImage from "figma:asset/dae7537bbe41af0f943f02540afbf6880f80d258.png";
-import weichaiImage from "figma:asset/e4c272631a44bc06a650ed8fb8abe5e645da862e.png";
-import gasInfraImage from "figma:asset/a38ccc8bbd9c936a8ac7f20348187b36d94af794.png";
-import technicianImage from "figma:asset/d30fa8deae183fccea0bae53a15f33a7af23d5a3.png";
-import baudouinImage from "figma:asset/431ef10b0ea129e06e8de622d6cff46855940cff.png";
-import baudouinComplexImage from "figma:asset/3c9bb3fce1e3fcafcad20a84be7d57779fa0b41d.png";
-import gasPipelineImage from "figma:asset/9e1e0e6a5be658c95ceffa6a3db3e52927641cc9.png";
-import serviceMaintenanceImage from "figma:asset/4560e859a8f981ee8aa2aeafae2836371b6da85e.png";
-import financialModelImage from "figma:asset/fdfe24102a1f198363c86a9211c03f20ca4860c4.png";
-import supermalyGeneratorImage from "figma:asset/5494590d6b5fc44e953a5f245784f87beff560c0.png";
-import gasPipelineFieldImage from "figma:asset/99da96406a82b8363ffd914c123b36fe267d7b03.png";
-import engiBlueGeneratorImage from "figma:asset/d769db4c393b1e2e2b14d91f6505d05b1b00b78f.png";
+const fullCycleImage = "/assets/full-cycle.png";
+const guaranteesImage = "/assets/guarantees.png";
+const asicHostingImage = "/assets/asic-hosting.png";
+const gpuMiningImage = "/assets/gpu-mining.png";
+const weichaiImage = "/assets/weichai.png";
+const gasInfraImage = "/assets/gas-infra.png";
+const technicianImage = "/assets/technician.png";
+const baudouinImage = "/assets/baudouin.png";
+const baudouinComplexImage = "/assets/baudouin-complex.png";
+const gasPipelineImage = "/assets/gas-pipeline.png";
+const serviceMaintenanceImage = "/assets/service-maintenance.png";
+const financialModelImage = "/assets/financial-model.png";
+const supermalyGeneratorImage = "/assets/supermaly-generator.png";
+const gasPipelineFieldImage = "/assets/gas-pipeline-field.png";
+const engiBlueGeneratorImage = "/assets/engi-blue-generator.png";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 // Unsplash images for Invest tab
