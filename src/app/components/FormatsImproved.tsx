@@ -358,11 +358,11 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
           key={idx}
           style={{
             color: TOKENS.text,
-            fontSize: 14,
-            lineHeight: 1.6,
-            padding: "10px 12px",
-            background: "rgba(3, 3, 3, 0.78)",
-            border: "1px solid rgba(255,255,255,0.12)",
+            fontSize: 13,
+            lineHeight: 1.55,
+            padding: "8px 10px",
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255,255,255,0.18)",
             borderRadius: 6,
           }}
         >
