@@ -666,20 +666,9 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
                 fontWeight: 700,
               }}
             >
-              Тариф от {CONTENT.hero.pricing.main}
-              <span style={{ opacity: 0.8, marginLeft: 4 }}>
-                {CONTENT.hero.pricing.unit}
-              </span>
+              Тариф {CONTENT.hero.pricing.main}
+              <span style={{ opacity: 0.8, marginLeft: 4 }}>{CONTENT.hero.pricing.unit}</span>
             </div>
-            <span
-              style={{
-                color: TOKENS.muted,
-                fontSize: 12,
-                opacity: 0.9,
-              }}
-            >
-              {CONTENT.hero.pricing.comparison}
-            </span>
           </div>
 
           <h1 style={{ margin: 0, color: TOKENS.text, fontSize: isMobile ? 30 : 44, lineHeight: 1.15, fontWeight: 900, marginTop: 0 }}>
