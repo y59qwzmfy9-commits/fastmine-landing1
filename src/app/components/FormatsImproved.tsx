@@ -357,13 +357,13 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
         <div
           key={idx}
           style={{
-            color: TOKENS.muted,
-            fontSize: 13,
-            lineHeight: 1.55,
-            padding: "8px 12px",
-            background: "rgba(255,255,255,0.03)",
-            border: `1px solid ${TOKENS.stroke}`,
-            borderRadius: 4,
+            color: TOKENS.text,
+            fontSize: 14,
+            lineHeight: 1.6,
+            padding: "10px 12px",
+            background: "rgba(3, 3, 3, 0.78)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: 6,
           }}
         >
           {item}
