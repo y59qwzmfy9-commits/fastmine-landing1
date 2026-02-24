@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fastmine.energy/sitemap.xml
+
