@@ -34,7 +34,7 @@ const TOKENS = {
   lightMuted: "#6b6b6b",
   lightStroke: "#e5e5e5",
   maxW: 1200,
-  radius: 8,
+  radius: 0,
 };
 
 type LeadModel = "Хостинг для ASIC" | "Майнинг на ГПУ" | "Инвестиции в ГПУ";
@@ -303,9 +303,9 @@ function Button({
       onMouseLeave={() => setIsHovered(false)}
       style={{
         cursor: "pointer",
-        borderRadius: 999,
+        borderRadius: TOKENS.radius,
         border: p ? "1px solid transparent" : `1px solid ${TOKENS.stroke}`,
-        background: p ? (isHovered ? "#3f4bff" : TOKENS.accent) : "transparent",
+        background: p ? TOKENS.accent : "transparent",
         color: p ? "#fff" : TOKENS.text,
         padding: "12px 16px",
         fontSize: 13,
@@ -313,7 +313,7 @@ function Button({
         textTransform: "uppercase",
         letterSpacing: 0.3,
         transition: "all 200ms ease",
-        boxShadow: p && isHovered ? "0 0 24px rgba(51, 66, 243, 0.45)" : "none",
+        boxShadow: p && isHovered ? "0 0 20px rgba(51, 66, 243, 0.5)" : "none",
         transform: isHovered ? "translateY(-1px)" : "translateY(0)",
         ...style,
       }}
