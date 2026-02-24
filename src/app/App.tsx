@@ -844,7 +844,7 @@ function How() {
   return (
     <Section
       id="how"
-      theme="light"
+      theme="dark"
       title="Как это работает"
       subtitle="Размещение майнингового оборудования на собственной генерации — под ключ, за 4 шага."
     >
@@ -1017,18 +1017,18 @@ function Why() {
   return (
     <section
       style={{
-        background: TOKENS.lightBg,
+        background: TOKENS.bg,
         padding: isMobile ? "64px 0" : "80px 0",
-        borderTop: `1px solid ${TOKENS.lightStroke}`,
+        borderTop: `1px solid ${TOKENS.stroke}`,
       }}
     >
       <Container>
         {/* Section header */}
         <div style={{ marginBottom: 48 }}>
-          <h2 style={{ margin: 0, color: TOKENS.lightText, fontSize: 28, lineHeight: 1.2, fontWeight: 800 }}>
+          <h2 style={{ margin: 0, color: TOKENS.text, fontSize: 28, lineHeight: 1.2, fontWeight: 800 }}>
             {CONTENT.why.title}
           </h2>
-          <p style={{ margin: "10px 0 0", color: TOKENS.lightMuted, fontSize: 16, lineHeight: 1.7 }}>
+          <p style={{ margin: "10px 0 0", color: TOKENS.muted, fontSize: 16, lineHeight: 1.7 }}>
             {CONTENT.why.subtitle}
           </p>
         </div>
