@@ -2579,7 +2579,7 @@ export default function App() {
   }, []);
 
   return (
-    <div style={{ minHeight: "100vh", background: TOKENS.bg, color: TOKENS.text, fontFamily: "Montserrat, Arial, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: TOKENS.bg, color: TOKENS.text }}>
       <Header />
       <Hero onLead={onLead} />
       <How />
