@@ -1040,12 +1040,12 @@ function Why() {
               }}
             />
 
-            {/* Darker gradient overlay */}
+            {/* Darker gradient overlay - slightly lightened */}
             <div
               style={{
                 position: "absolute",
                 inset: 0,
-                background: "linear-gradient(180deg, rgba(3,3,3,0.70) 0%, rgba(3,3,3,0.82) 70%, rgba(3,3,3,0.90) 100%)",
+                background: "linear-gradient(180deg, rgba(3,3,3,0.50) 0%, rgba(3,3,3,0.65) 70%, rgba(3,3,3,0.78) 100%)",
               }}
             />
 
@@ -1114,12 +1114,12 @@ function Why() {
               }}
             />
 
-            {/* Gradient overlay */}
+            {/* Gradient overlay - slightly lightened */}
             <div
               style={{
                 position: "absolute",
                 inset: 0,
-                background: "linear-gradient(180deg, rgba(3,3,3,0.55) 0%, rgba(3,3,3,0.68) 70%, rgba(3,3,3,0.78) 100%)",
+                background: "linear-gradient(180deg, rgba(3,3,3,0.40) 0%, rgba(3,3,3,0.60) 70%, rgba(3,3,3,0.72) 100%)",
               }}
             />
 
