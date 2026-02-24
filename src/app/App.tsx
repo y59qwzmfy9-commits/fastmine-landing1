@@ -2087,12 +2087,13 @@ function Gallery({ onLead }: { onLead: (payload: any) => void }) {
               }}
             />
             
-            {/* Overlay */}
+            {/* Overlay - reduced darkening to ~10–20% */}
             <div
               style={{
                 position: "absolute",
                 inset: 0,
-                background: "linear-gradient(180deg, rgba(3,3,3,0.25) 0%, rgba(3,3,3,0.65) 70%, rgba(3,3,3,0.75) 100%)",
+                background:
+                  "linear-gradient(180deg, rgba(3,3,3,0.10) 0%, rgba(3,3,3,0.20) 60%, rgba(3,3,3,0.28) 100%)",
               }}
             />
             
