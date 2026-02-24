@@ -646,49 +646,12 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
           <h1 style={{ margin: 0, color: TOKENS.text, fontSize: isMobile ? 30 : 44, lineHeight: 1.15, fontWeight: 900, marginTop: 0 }}>
             {CONTENT.hero.h1}
           </h1>
-          <p style={{ margin: "14px 0 0", color: TOKENS.text, fontSize: 16, lineHeight: 1.7 }}>
-            {CONTENT.hero.sub}
-          </p>
-          <div style={{ marginTop: 16, display: "grid", gap: 10 }}>
-            {utpItems.map((x, idx) => (
-              <div
-                key={x}
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: 10,
-                }}
-              >
-                <div
-                  style={{
-                    width: 18,
-                    height: 18,
-                    borderRadius: 999,
-                    border: `2px solid ${TOKENS.accent}`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 11,
-                    fontWeight: 800,
-                    color: TOKENS.accent,
-                    marginTop: 2,
-                  }}
-                >
-                  ✓
-                </div>
-                <div
-                  style={{
-                    color: TOKENS.text,
-                    lineHeight: 1.6,
-                    fontSize: 14,
-                    fontWeight: idx === 1 ? 700 : 500,
-                  }}
-                >
-                  {x}
-                </div>
-              </div>
+          <p style={{ margin: "14px 0 0", color: TOKENS.muted, fontSize: 16, lineHeight: 1.7 }}>{CONTENT.hero.sub}</p>
+          <ul style={{ margin: "16px 0 0", paddingLeft: 18, color: TOKENS.text, lineHeight: 1.9 }}>
+            {utpItems.map((x) => (
+              <li key={x}>{x}</li>
             ))}
-          </div>
+          </ul>
           {isMobile && CONTENT.hero.utp.length > 3 && (
             <button
               type="button"
@@ -727,22 +690,7 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
             <Button
               variant="secondary"
               onClick={() => onLead({ source: "hero_telegram" })}
-              style={
-                isMobile
-                  ? {
-                      width: "100%",
-                      padding: "14px 20px",
-                      fontSize: 14,
-                      border: "1px solid rgba(255,255,255,0.75)",
-                      background: "rgba(255,255,255,0.06)",
-                      color: "#ffffff",
-                    }
-                  : {
-                      border: "1px solid rgba(255,255,255,0.75)",
-                      background: "rgba(255,255,255,0.04)",
-                      color: "#ffffff",
-                    }
-              }
+              style={isMobile ? { width: "100%", padding: "14px 20px", fontSize: 14 } : undefined}
             >
               {CONTENT.hero.ctaSecondary}
             </Button>
@@ -854,15 +802,15 @@ function How() {
           const isLight = s.overlayStrength === "light";
           const isLighter = s.overlayStrength === "lighter";
           const linearGradient = isLight
-            ? "linear-gradient(180deg, rgba(3,3,3,0.55) 0%, rgba(3,3,3,0.75) 55%, rgba(3,3,3,0.9) 100%)"
+            ? "linear-gradient(180deg, rgba(3,3,3,0.35) 0%, rgba(3,3,3,0.45) 60%, rgba(3,3,3,0.55) 100%)"
             : isLighter
-            ? "linear-gradient(180deg, rgba(3,3,3,0.45) 0%, rgba(3,3,3,0.7) 55%, rgba(3,3,3,0.88) 100%)"
-            : "linear-gradient(180deg, rgba(3,3,3,0.6) 0%, rgba(3,3,3,0.8) 55%, rgba(3,3,3,0.95) 100%)";
+            ? "linear-gradient(180deg, rgba(3,3,3,0.3) 0%, rgba(3,3,3,0.4) 60%, rgba(3,3,3,0.5) 100%)"
+            : "linear-gradient(180deg, rgba(3,3,3,0.4) 0%, rgba(3,3,3,0.5) 60%, rgba(3,3,3,0.6) 100%)";
           const vignetteGradient = isLight
-            ? "radial-gradient(circle at 50% 20%, rgba(3,3,3,0) 0%, rgba(3,3,3,0.3) 100%)"
+            ? "radial-gradient(circle at 50% 50%, rgba(3,3,3,0) 0%, rgba(3,3,3,0.15) 100%)"
             : isLighter
-            ? "radial-gradient(circle at 50% 20%, rgba(3,3,3,0) 0%, rgba(3,3,3,0.25) 100%)"
-            : "radial-gradient(circle at 50% 20%, rgba(3,3,3,0) 0%, rgba(3,3,3,0.35) 100%)";
+            ? "radial-gradient(circle at 50% 50%, rgba(3,3,3,0) 0%, rgba(3,3,3,0.1) 100%)"
+            : "radial-gradient(circle at 50% 50%, rgba(3,3,3,0) 0%, rgba(3,3,3,0.2) 100%)";
 
           return (
             <motion.div
