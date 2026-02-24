@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "motion/react";
 import { Server, Flame, Sparkles, TrendingUp, Building2 } from "lucide-react";
 const fullCycleImage = "/assets/full-cycle.png";
 const guaranteesImage = "/assets/guarantees.png";
@@ -116,7 +117,7 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
     {
       key: "asic",
       title: "Хостинг для ASIC",
-      lead: "Полный цикл — от подбора ASIC до стабил��ной эксплуатации.",
+      lead: "Полный цикл — от подбора ASIC до стабильной эксплуатации.",
       highlights: [
         "Фиксированный тариф от 5 ₽ за кВт·ч с НДС",
         "Аптайм до 99% и круглосуточный мониторинг",
@@ -129,7 +130,7 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
           items: [
             "Подбор ASIC под ваш бюджет и экономику",
             "Официальная поставка: ГТД РФ, НДС, логистика по РФ и СНГ",
-            "Размещение, настрой��а и запуск на пуле",
+            "Размещение, настройка и запуск на пуле",
             "Регламентное обслуживание и техническое сопровождение 24/7",
           ],
         },
@@ -262,14 +263,14 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
           title: "Что обеспечивает FastMine",
           items: [
             "Площадка и инфраструктура подключения",
-            "Газос��абжение и контроль качества топлива",
+            "Газоснабжение и контроль качества топлива",
             "Полное техническое обслуживание ГПУ",
             "Мониторинг и эксплуатация 24/7",
             "Договорная работа с потребителями мощности",
           ],
         },
         {
-          title: "Преимущества инвест��ра",
+          title: "Преимущества инвестора",
           items: [
             "Владение оборудованием как промышленным активом",
             "Операционное управление и эксплуатация — на стороне FastMine",
@@ -296,12 +297,7 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
       title: "Дата-центр под ключ",
       lead: "Проектирование и строительство инфраструктуры: от идеи до запуска.",
       highlights: ["Инжиниринг и проект", "Поставка и монтаж", "ПНР и ввод", "Эксплуатация и сервис"],
-      blocks: [
-        {
-          title: "Скоро добавим",
-          items: ["Заполним УТП и условия для этого формата."],
-        },
-      ],
+      blocks: [],
       cta: "Запросить расчет проекта",
     },
   ];
@@ -456,9 +452,9 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
             background: TOKENS.panel,
             border: `1px solid ${TOKENS.stroke}`,
             borderRadius: TOKENS.radius,
-            padding: 28,
+            padding: isMobile ? 20 : 28,
             overflow: "hidden",
-            minHeight: 320,
+            minHeight: isMobile ? 280 : 320,
           }}
         >
           {/* Background image for ASIC tab */}
@@ -614,7 +610,7 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
               </div>
             </div>
 
-            <p style={{ margin: "0 0 0", color: TOKENS.muted, lineHeight: 1.7, fontSize: 14, maxWidth: 760 }}>{t.lead}</p>
+            <p style={{ margin: "0 0 0", color: TOKENS.muted, lineHeight: 1.7, fontSize: isMobile ? 15 : 14, maxWidth: 760 }}>{t.lead}</p>
 
             {/* Glassmorphism pills for all tabs */}
             {isInvestTab || isBaudouinTab || isGpuTab || isAsicTab ? (
@@ -663,9 +659,9 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
                   background: TOKENS.panel,
                   border: `1px solid ${TOKENS.stroke}`,
                   borderRadius: TOKENS.radius,
-                  padding: 32,
+                  padding: isMobile ? 20 : 32,
                   overflow: "hidden",
-                  minHeight: 360,
+                  minHeight: isMobile ? 300 : 360,
                 }}
               >
                 {/* Background image - SUPERMALY Generator */}
@@ -1518,9 +1514,14 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
       </div>
 
       {/* Right content */}
-      <div>
+      <motion.div
+        key={activeTab.key}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+      >
         <Content t={activeTab} />
-      </div>
+      </motion.div>
     </div>
   );
 }

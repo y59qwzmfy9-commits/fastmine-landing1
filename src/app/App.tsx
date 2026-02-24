@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { motion } from "motion/react";
 import { Cpu, Zap, Truck, Settings, Server, TrendingUp, Building2, Flame, Sparkles, Shield, Award, Phone, Mail, MapPin, Send } from "lucide-react";
 import { FormatsImproved } from "./components/FormatsImproved";
 
@@ -52,7 +53,7 @@ const CONTENT = {
       savings: "Экономия 47%"
     },
     utp: [
-      "Ваше оборудование под охраной 24/7 ��а промышленной территории",
+      "Ваше оборудование под охраной 24/7 на промышленной территории",
       "Планируйте прибыль: тариф не зависит от колебаний рынка",
       "Индивидуальный расчет тарифа от 3 ₽ за кВт·ч",
       "Спите спокойно: наша команда следит за оборудованием круглосуточно",
@@ -71,7 +72,7 @@ const CONTENT = {
     subtitle: "Размещение майнингового оборудования на собственной генерации — под ключ, за 4 шага.",
     steps: [
       { t: "1. Выбор модели работы", d: "Определяем формат: хостинг, майнинг на ГПУ или инвестиции." },
-      { t: "2. Запрос предложения", d: "Согласуем парам��тры и подготовим коммерческое предложение." },
+      { t: "2. Запрос предложения", d: "Согласуем параметры и подготовим коммерческое предложение." },
       { t: "3. Введение в работу", d: "Подключаем, запускаем, сопровождаем. Мониторинг и сервис включены." },
     ],
   },
@@ -147,7 +148,7 @@ const CONTENT = {
     namePh: "Имя",
     contactPh: "Телефон или Telegram (обязательно)",
     powerPh: "Мощность (кВт) или количество ASIC",
-    btn: "Получить персон��льный расчет за 2 часа",
+    btn: "Получить персональный расчет за 2 часа",
   },
   
   faq: {
@@ -183,8 +184,25 @@ const CONTENT = {
 };
 
 function Container({ children }: { children: React.ReactNode }) {
-  return <div style={{ maxWidth: TOKENS.maxW, margin: "0 auto", padding: "0 20px" }}>{children}</div>;
+  const isMobile = useIsMobile();
+  return (
+    <div
+      style={{
+        maxWidth: TOKENS.maxW,
+        margin: "0 auto",
+        padding: isMobile ? "0 16px" : "0 20px",
+      }}
+    >
+      {children}
+    </div>
+  );
 }
+
+const fadeInViewport = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.25 },
+};
 
 function useIsMobile() {
   const [m, setM] = React.useState(false);
@@ -214,6 +232,7 @@ function Section({
   children: React.ReactNode;
   spacing?: number;
 }) {
+  const isMobile = useIsMobile();
   const isDark = theme === "dark";
   const bgColor = isDark 
     ? (tone === "panel" ? TOKENS.panel : TOKENS.bg)
@@ -223,24 +242,28 @@ function Section({
   const strokeColor = isDark ? TOKENS.stroke : TOKENS.lightStroke;
 
   return (
-    <section
+    <motion.section
       id={id}
       style={{
         background: bgColor,
-        padding: "64px 0",
+        padding: isMobile ? "48px 0" : "64px 0",
         borderTop: `1px solid ${strokeColor}`,
       }}
+      initial={fadeInViewport.initial}
+      whileInView={fadeInViewport.whileInView}
+      viewport={fadeInViewport.viewport}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <Container>
         {(title || subtitle) && (
           <div style={{ marginBottom: spacing }}>
-            {title && <h2 style={{ margin: 0, color: textColor, fontSize: 28, lineHeight: 1.2, fontWeight: 800 }}>{title}</h2>}
+            {title && <h2 style={{ margin: 0, color: textColor, fontSize: isMobile ? 24 : 28, lineHeight: 1.2, fontWeight: 800 }}>{title}</h2>}
             {subtitle && <p style={{ margin: "10px 0 0", color: mutedColor, fontSize: 16, lineHeight: 1.7 }}>{subtitle}</p>}
           </div>
         )}
         {children}
       </Container>
-    </section>
+    </motion.section>
   );
 }
 
@@ -319,9 +342,9 @@ function Input({
         background: TOKENS.bg,
         border: `1px solid ${TOKENS.stroke}`,
         borderRadius: TOKENS.radius,
-        padding: "12px 12px",
+        padding: "14px 14px",
         color: TOKENS.text,
-        fontSize: 14,
+        fontSize: 16,
         outline: "none",
       }}
     />
@@ -418,7 +441,7 @@ function Header() {
       }}
     >
       <Container>
-        <div style={{ height: 64, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
+        <div style={{ height: isMobile ? 56 : 64, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
           {/* Logo */}
           <a 
             href="#" 
@@ -503,12 +526,15 @@ function Header() {
                 border: "none",
                 color: TOKENS.text,
                 cursor: "pointer",
-                padding: 8,
+                padding: 12,
+                minWidth: 44,
+                minHeight: 44,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                margin: -4,
               }}
-              aria-label="Toggle menu"
+              aria-label="Меню"
             >
               {menuOpen ? (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -531,11 +557,11 @@ function Header() {
           <div
             style={{
               borderTop: `1px solid ${TOKENS.stroke}`,
-              paddingTop: 16,
-              paddingBottom: 20,
+              paddingTop: 20,
+              paddingBottom: 24,
               display: "flex",
               flexDirection: "column",
-              gap: 16,
+              gap: 4,
             }}
           >
             {links.map((l) => (
@@ -546,18 +572,21 @@ function Header() {
                 style={{
                   color: TOKENS.text,
                   textDecoration: "none",
-                  fontSize: 14,
-                  fontWeight: 500,
+                  fontSize: 15,
+                  fontWeight: 600,
                   textTransform: "uppercase",
                   letterSpacing: 0.5,
-                  padding: "8px 0",
+                  padding: "14px 0",
                   cursor: "pointer",
+                  minHeight: 48,
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
                 {l.t}
               </a>
             ))}
-            <div style={{ height: 1, background: TOKENS.stroke, margin: "8px 0" }} />
+            <div style={{ height: 1, background: TOKENS.stroke, margin: "12px 0" }} />
             <a
               href="https://t.me/fastmineru"
               target="_blank"
@@ -567,20 +596,21 @@ function Header() {
                 textDecoration: "none",
                 display: "flex",
                 alignItems: "center",
-                gap: 8,
-                fontSize: 14,
+                gap: 10,
+                fontSize: 15,
                 fontWeight: 500,
-                padding: "8px 0",
+                padding: "14px 0",
+                minHeight: 48,
                 cursor: "pointer",
               }}
             >
-              <Send size={18} />
+              <Send size={20} />
               <span>Telegram</span>
             </a>
             <Button
               variant="primary"
               onClick={handleScrollToContact}
-              style={{ width: "100%", fontSize: 14 }}
+              style={{ width: "100%", fontSize: 14, padding: "14px 20px", marginTop: 8 }}
             >
               Получить расчет
             </Button>
@@ -595,15 +625,19 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
   const isMobile = useIsMobile();
 
   return (
-    <section
+    <motion.section
       style={{
         background: TOKENS.bg,
         padding: isMobile ? "44px 0" : "72px 0",
         position: "relative",
         overflow: "hidden",
       }}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.7 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div
+      <motion.div
         style={{
           position: "absolute",
           top: 0,
@@ -616,6 +650,9 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
           opacity: 1,
           pointerEvents: "none",
         }}
+        initial={{ scale: 1.06, opacity: 0.7 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
       />
       <Container>
         <div style={{ position: "relative", zIndex: 1, maxWidth: isMobile ? "100%" : "60%" }}>
@@ -628,17 +665,33 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
               <li key={x}>{x}</li>
             ))}
           </ul>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 20 }}>
-            <Button variant="primary" onClick={() => onLead({ source: "hero_primary" })}>
+          <div
+            style={{
+              display: "flex",
+              gap: 12,
+              flexWrap: "wrap",
+              marginTop: 24,
+              flexDirection: isMobile ? "column" : "row",
+            }}
+          >
+            <Button
+              variant="primary"
+              onClick={() => onLead({ source: "hero_primary" })}
+              style={isMobile ? { width: "100%", padding: "14px 20px", fontSize: 14 } : undefined}
+            >
               {CONTENT.hero.ctaPrimary}
             </Button>
-            <Button variant="secondary" onClick={() => onLead({ source: "hero_telegram" })}>
+            <Button
+              variant="secondary"
+              onClick={() => onLead({ source: "hero_telegram" })}
+              style={isMobile ? { width: "100%", padding: "14px 20px", fontSize: 14 } : undefined}
+            >
               {CONTENT.hero.ctaSecondary}
             </Button>
           </div>
         </div>
       </Container>
-    </section>
+    </motion.section>
   );
 }
 
@@ -700,13 +753,7 @@ function How() {
       title="Как это работает"
       subtitle="Размещение майнингового оборудования на собственной генерации — под ключ, за 4 шага."
     >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: cols,
-          gap: 14,
-        }}
-      >
+      <div style={{ display: "grid", gridTemplateColumns: cols, gap: 14 }}>
         {steps.map((s) => {
           // Determine overlay based on strength setting
           const isLight = s.overlayStrength === "light";
@@ -723,7 +770,7 @@ function How() {
             : "radial-gradient(circle at 50% 50%, rgba(3,3,3,0) 0%, rgba(3,3,3,0.2) 100%)";
 
           return (
-            <div
+            <motion.div
               key={s.num}
               style={{
                 position: "relative",
@@ -733,6 +780,8 @@ function How() {
                 minHeight: isMobile ? 280 : 260,
                 backgroundColor: TOKENS.panel,
               }}
+              whileHover={{ scale: 1.02, translateY: -4 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
             >
               {/* BG image */}
               <div
@@ -859,7 +908,7 @@ function How() {
                   {s.footer}
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -1444,14 +1493,14 @@ function Formats({ onLead }: { onLead: (payload: any) => void }) {
         },
       ],
       cta: "Получить расчет инвестиционной модели",
-      footnote: "*Расчетная доходн��сть зависит от конфигурации, загрузки мощности и рыночных условий. Материалы предоставляются по запросу и не являются публичной офертой.",
+      footnote: "*Расчетная доходность зависит от конфигурации, загрузки мощности и рыночных условий. Материалы предоставляются по запросу и не являются публичной офертой.",
     },
     {
       key: "dc",
       title: "Дата-центр под ключ",
       lead: "Проектирование и строительство инфраструктуры: от идеи до запуска.",
       highlights: ["Инжиниринг и проект", "Поставка и монтаж", "ПНР и ввод", "Эксплуатация и сервис"],
-      blocks: [{ title: "Скоро добавим", items: ["Заполним УТП и условия для этого формата."] }],
+      blocks: [],
       cta: "Запросить расчет проекта",
     },
   ];
@@ -1634,7 +1683,7 @@ function Docs() {
       icon: Building2,
       items: [
         { text: "Официальный дистрибьютор Weichai в РФ", label: "Прямые поставки" },
-        { text: "Контракт газоснабжения и технические условия подключения", label: "Э��ергия" },
+        { text: "Контракт газоснабжения и технические условия подключения", label: "Энергия" },
       ]
     },
   ];
@@ -2080,20 +2129,24 @@ function Final({ onLead }: { onLead: (payload: any) => void }) {
   const [power, setPower] = useState("");
 
   return (
-    <section id="contact-form" style={{ background: TOKENS.bg, padding: "72px 0", borderTop: `1px solid ${TOKENS.stroke}` }}>
+    <section id="contact-form" style={{ background: TOKENS.bg, padding: isMobile ? "48px 0" : "72px 0", borderTop: `1px solid ${TOKENS.stroke}` }}>
       <Container>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.1fr 0.9fr", gap: 18 }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.1fr 0.9fr", gap: isMobile ? 24 : 18 }}>
           <div>
-            <h2 style={{ margin: 0, color: TOKENS.text, fontSize: 28, fontWeight: 900 }}>{CONTENT.final.title}</h2>
+            <h2 style={{ margin: 0, color: TOKENS.text, fontSize: isMobile ? 24 : 28, fontWeight: 900 }}>{CONTENT.final.title}</h2>
             <p style={{ margin: "10px 0 0", color: TOKENS.muted, lineHeight: 1.7 }}>{CONTENT.final.subtitle}</p>
           </div>
 
           <Card>
-            <div style={{ display: "grid", gap: 12 }}>
+            <div style={{ display: "grid", gap: isMobile ? 14 : 12 }}>
               <Input value={name} onChange={setName} placeholder={CONTENT.final.namePh} />
               <Input value={contact} onChange={setContact} placeholder={CONTENT.final.contactPh} />
               <Input value={power} onChange={setPower} placeholder={CONTENT.final.powerPh} />
-              <Button variant="primary" onClick={() => onLead({ source: "final_form", name, contact, power })}>
+              <Button
+                variant="primary"
+                onClick={() => onLead({ source: "final_form", name, contact, power })}
+                style={isMobile ? { padding: "14px 20px", fontSize: 14 } : undefined}
+              >
                 {CONTENT.final.btn}
               </Button>
               
