@@ -656,12 +656,12 @@ export function FormatsImproved({ onLead, isMobile }: FormatsImprovedProps) {
                   minHeight: isMobile ? 300 : 360,
                 }}
               >
-                {/* Background image - SUPERMALY Generator */}
+                {/* Background image - gas pipeline field for Invest model */}
                 <div
                   style={{
                     position: "absolute",
                     inset: 0,
-                    backgroundImage: `url(${supermalyGeneratorImage})`,
+                    backgroundImage: `url(${gasPipelineImage})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     filter: "saturate(0.95) brightness(0.85)",
