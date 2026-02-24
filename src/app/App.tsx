@@ -643,34 +643,6 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
     >
       <Container>
         <div style={{ position: "relative", zIndex: 1, maxWidth: isMobile ? "100%" : "60%" }}>
-          {/* Pricing badge row */}
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              gap: 10,
-              marginBottom: 10,
-            }}
-          >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                padding: "6px 10px",
-                borderRadius: 999,
-                background: "rgba(51, 66, 243, 0.16)",
-                border: `1px solid ${TOKENS.accent}`,
-                color: TOKENS.text,
-                fontSize: 13,
-                fontWeight: 700,
-              }}
-            >
-              Тариф {CONTENT.hero.pricing.main}
-              <span style={{ opacity: 0.8, marginLeft: 4 }}>{CONTENT.hero.pricing.unit}</span>
-            </div>
-          </div>
-
           <h1 style={{ margin: 0, color: TOKENS.text, fontSize: isMobile ? 30 : 44, lineHeight: 1.15, fontWeight: 900, marginTop: 0 }}>
             {CONTENT.hero.h1}
           </h1>
