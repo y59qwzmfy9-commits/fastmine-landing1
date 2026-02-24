@@ -2087,13 +2087,13 @@ function Gallery({ onLead }: { onLead: (payload: any) => void }) {
               }}
             />
             
-            {/* Overlay - gradient only from bottom under the text */}
+            {/* Overlay - stronger gradient снизу под текстом */}
             <div
               style={{
                 position: "absolute",
                 inset: 0,
                 background:
-                  "linear-gradient(180deg, rgba(3,3,3,0) 0%, rgba(3,3,3,0.25) 55%, rgba(3,3,3,0.45) 100%)",
+                  "linear-gradient(180deg, rgba(3,3,3,0) 0%, rgba(3,3,3,0.40) 55%, rgba(3,3,3,0.70) 100%)",
               }}
             />
             
