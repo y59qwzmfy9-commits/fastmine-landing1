@@ -2087,13 +2087,13 @@ function Gallery({ onLead }: { onLead: (payload: any) => void }) {
               }}
             />
             
-            {/* Overlay - reduced darkening to ~10–20% */}
+            {/* Overlay - gradient only from bottom under the text */}
             <div
               style={{
                 position: "absolute",
                 inset: 0,
                 background:
-                  "linear-gradient(180deg, rgba(3,3,3,0.10) 0%, rgba(3,3,3,0.20) 60%, rgba(3,3,3,0.28) 100%)",
+                  "linear-gradient(180deg, rgba(3,3,3,0) 0%, rgba(3,3,3,0.25) 55%, rgba(3,3,3,0.45) 100%)",
               }}
             />
             
