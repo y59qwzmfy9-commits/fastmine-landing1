@@ -386,6 +386,7 @@ function Select<T extends string>({
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const isMobile = useIsMobile();
 
   const links = [
@@ -407,6 +408,26 @@ function Header() {
       }
     }, isMobile ? 100 : 0);
   };
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target.id) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const sections = document.querySelectorAll<HTMLElement>("section[id]");
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleLinkClick = (e, href) => {
     e.preventDefault();
@@ -464,15 +485,25 @@ function Header() {
                     key={l.href}
                     href={l.href}
                     onClick={(e) => handleLinkClick(e, l.href)}
+                    data-active={activeSection === l.href.replace("#", "")}
                     style={{
-                      color: TOKENS.text,
+                      color:
+                        activeSection === l.href.replace("#", "")
+                          ? TOKENS.accent
+                          : TOKENS.text,
                       textDecoration: "none",
                       fontSize: 13,
-                      fontWeight: 400,
+                      fontWeight:
+                        activeSection === l.href.replace("#", "") ? 700 : 400,
                       textTransform: "uppercase",
                       letterSpacing: 0.3,
                       transition: "color 0.2s ease",
                       cursor: "pointer",
+                      borderBottom:
+                        activeSection === l.href.replace("#", "")
+                          ? `2px solid ${TOKENS.accent}`
+                          : "2px solid transparent",
+                      paddingBottom: 4,
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.color = TOKENS.accent)}
                     onMouseLeave={(e) => (e.currentTarget.style.color = TOKENS.text)}
@@ -570,10 +601,14 @@ function Header() {
                 href={l.href}
                 onClick={(e) => handleLinkClick(e, l.href)}
                 style={{
-                  color: TOKENS.text,
+                  color:
+                    activeSection === l.href.replace("#", "")
+                      ? TOKENS.accent
+                      : TOKENS.text,
                   textDecoration: "none",
                   fontSize: 15,
-                  fontWeight: 600,
+                  fontWeight:
+                    activeSection === l.href.replace("#", "") ? 700 : 600,
                   textTransform: "uppercase",
                   letterSpacing: 0.5,
                   padding: "14px 0",
