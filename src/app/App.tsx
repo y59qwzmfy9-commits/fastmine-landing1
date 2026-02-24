@@ -637,23 +637,6 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
       viewport={{ once: true, amount: 0.7 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <motion.div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: isMobile ? 0 : "50%",
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: 1,
-          pointerEvents: "none",
-        }}
-        initial={{ scale: 1.06, opacity: 0.7 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      />
       <Container>
         <div style={{ position: "relative", zIndex: 1, maxWidth: isMobile ? "100%" : "60%" }}>
           <h1 style={{ margin: 0, color: TOKENS.text, fontSize: isMobile ? 30 : 44, lineHeight: 1.15, fontWeight: 900, marginTop: 0 }}>
@@ -690,6 +673,43 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
             </Button>
           </div>
         </div>
+
+        {/* Desktop hero background on the right, separate image on mobile */}
+        {!isMobile && (
+          <motion.div
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: "50%",
+              backgroundImage: `url(${heroImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: 1,
+              pointerEvents: "none",
+            }}
+            initial={{ scale: 1.06, opacity: 0.7 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          />
+        )}
+
+        {isMobile && (
+          <div style={{ marginTop: 28 }}>
+            <img
+              src={heroImage}
+              alt="Газовая ГПУ и инфраструктура FastMine"
+              style={{
+                width: "100%",
+                height: 220,
+                objectFit: "cover",
+                borderRadius: 8,
+                border: `1px solid ${TOKENS.stroke}`,
+              }}
+            />
+          </div>
+        )}
       </Container>
     </motion.section>
   );
