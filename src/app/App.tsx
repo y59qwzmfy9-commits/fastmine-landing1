@@ -623,6 +623,10 @@ function Header() {
 
 function Hero({ onLead }: { onLead: (payload: any) => void }) {
   const isMobile = useIsMobile();
+  const [showAllUtp, setShowAllUtp] = useState(false);
+
+  const utpItems =
+    isMobile && !showAllUtp ? CONTENT.hero.utp.slice(0, 3) : CONTENT.hero.utp;
 
   return (
     <motion.section
@@ -639,15 +643,73 @@ function Hero({ onLead }: { onLead: (payload: any) => void }) {
     >
       <Container>
         <div style={{ position: "relative", zIndex: 1, maxWidth: isMobile ? "100%" : "60%" }}>
+          {/* Pricing badge row */}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 10,
+            }}
+          >
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "6px 10px",
+                borderRadius: 999,
+                background: "rgba(51, 66, 243, 0.16)",
+                border: `1px solid ${TOKENS.accent}`,
+                color: TOKENS.text,
+                fontSize: 13,
+                fontWeight: 700,
+              }}
+            >
+              Тариф от {CONTENT.hero.pricing.main}
+              <span style={{ opacity: 0.8, marginLeft: 4 }}>
+                {CONTENT.hero.pricing.unit}
+              </span>
+            </div>
+            <span
+              style={{
+                color: TOKENS.muted,
+                fontSize: 12,
+                opacity: 0.9,
+              }}
+            >
+              {CONTENT.hero.pricing.comparison}
+            </span>
+          </div>
+
           <h1 style={{ margin: 0, color: TOKENS.text, fontSize: isMobile ? 30 : 44, lineHeight: 1.15, fontWeight: 900, marginTop: 0 }}>
             {CONTENT.hero.h1}
           </h1>
           <p style={{ margin: "14px 0 0", color: TOKENS.muted, fontSize: 16, lineHeight: 1.7 }}>{CONTENT.hero.sub}</p>
           <ul style={{ margin: "16px 0 0", paddingLeft: 18, color: TOKENS.text, lineHeight: 1.9 }}>
-            {CONTENT.hero.utp.map((x) => (
+            {utpItems.map((x) => (
               <li key={x}>{x}</li>
             ))}
           </ul>
+          {isMobile && CONTENT.hero.utp.length > 3 && (
+            <button
+              type="button"
+              onClick={() => setShowAllUtp((v) => !v)}
+              style={{
+                marginTop: 8,
+                background: "transparent",
+                border: "none",
+                padding: 0,
+                color: TOKENS.accent,
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+            >
+              {showAllUtp ? "Скрыть подробности" : "Показать все преимущества"}
+            </button>
+          )}
           <div
             style={{
               display: "flex",
@@ -1206,11 +1268,21 @@ function Infra() {
       subtitle="Фотографии ключевых модулей инфраструктуры и краткое описание каждого."
     >
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: cols,
-          gap: isMobile ? 14 : 22,
-        }}
+        style={
+          isMobile
+            ? {
+                display: "flex",
+                gap: 14,
+                overflowX: "auto",
+                paddingBottom: 4,
+                scrollSnapType: "x mandatory",
+              }
+            : {
+                display: "grid",
+                gridTemplateColumns: cols,
+                gap: 22,
+              }
+        }
       >
         {items.map((it, idx) => {
           const isHover = hovered === idx;
@@ -1223,12 +1295,14 @@ function Infra() {
               style={{
                 position: "relative",
                 height: cardH,
+                minWidth: isMobile ? "82vw" : undefined,
                 borderRadius: TOKENS.radius,
                 border: `1px solid ${TOKENS.stroke}`,
                 overflow: "hidden",
                 background: TOKENS.panel,
                 transform: !isMobile && isHover ? "scale(1.015)" : "scale(1)",
                 transition: "transform 180ms ease, border-color 180ms ease",
+                scrollSnapAlign: isMobile ? "start" : undefined,
               }}
             >
               {/* Background image */}
@@ -1972,17 +2046,37 @@ function Gallery({ onLead }: { onLead: (payload: any) => void }) {
   return (
     <Section theme="dark" title={CONTENT.gallery.title} subtitle={CONTENT.gallery.subtitle} tone="panel">
       {/* Gallery grid */}
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 14, marginBottom: 24 }}>
+      <div
+        style={
+          isMobile
+            ? {
+                display: "flex",
+                gap: 14,
+                overflowX: "auto",
+                paddingBottom: 4,
+                marginBottom: 24,
+                scrollSnapType: "x mandatory",
+              }
+            : {
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: 14,
+                marginBottom: 24,
+              }
+        }
+      >
         {galleryImages.map((item, idx) => (
           <div
             key={idx}
             style={{
               position: "relative",
               height: isMobile ? 220 : 280,
+              minWidth: isMobile ? "82vw" : undefined,
               borderRadius: TOKENS.radius,
               border: `1px solid ${TOKENS.stroke}`,
               overflow: "hidden",
               background: TOKENS.panel,
+              scrollSnapAlign: isMobile ? "start" : undefined,
             }}
           >
             {/* Background image */}
@@ -2147,6 +2241,7 @@ function Final({ onLead }: { onLead: (payload: any) => void }) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [power, setPower] = useState("");
+  const [sent, setSent] = useState(false);
 
   return (
     <section id="contact-form" style={{ background: TOKENS.bg, padding: isMobile ? "48px 0" : "72px 0", borderTop: `1px solid ${TOKENS.stroke}` }}>
@@ -2164,11 +2259,31 @@ function Final({ onLead }: { onLead: (payload: any) => void }) {
               <Input value={power} onChange={setPower} placeholder={CONTENT.final.powerPh} />
               <Button
                 variant="primary"
-                onClick={() => onLead({ source: "final_form", name, contact, power })}
+                onClick={() => {
+                  onLead({ source: "final_form", name, contact, power });
+                  setSent(true);
+                  setTimeout(() => setSent(false), 4000);
+                }}
                 style={isMobile ? { padding: "14px 20px", fontSize: 14 } : undefined}
               >
                 {CONTENT.final.btn}
               </Button>
+              {sent && (
+                <div
+                  style={{
+                    marginTop: 4,
+                    padding: "8px 10px",
+                    borderRadius: 4,
+                    background: "rgba(51, 66, 243, 0.12)",
+                    border: `1px solid ${TOKENS.accent}`,
+                    color: TOKENS.text,
+                    fontSize: 12,
+                    textAlign: "center",
+                  }}
+                >
+                  Заявка отправлена. Ответим в течение 2 часов в рабочее время.
+                </div>
+              )}
               
               {/* Security badge */}
               <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center", marginTop: 4 }}>
